@@ -1,3 +1,3 @@
-composer update\n
-composer install\n
-php artisan serve\n
+composer update<br/>
+composer install<br/>
+php artisan serve<br/>
