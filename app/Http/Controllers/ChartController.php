@@ -35,7 +35,9 @@ return view('welcome');
     }
 
     public function cal($val){
-        return $val / 1000 / 1000;
+        $cal = $val / 1000 / 1000;
+        $val = number_format((float)$cal, 2, '.', ''); 
+        return $val;
     }
     
     public function index(Request $request)
@@ -52,7 +54,7 @@ return view('welcome');
         // Iterate over the period
         foreach ($period as $key => $date) {
             $traffics[$key]['date'] = $date->format('d/m/Y');
-            array_push($dates, [$date->format('d/m/Y')]);
+            array_push($dates, $date->format('Y-m-d'));
         }  
     
         

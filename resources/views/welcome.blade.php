@@ -10,6 +10,17 @@
 @csrf
 
 <div class="row">
+  <div class="col-md-4 offset-md-4">
+      <label>Step 1 -> Select Customer</label>
+      {{-- <select name="customer_id" id="customer_id" class="form-control customer_id" required>
+        <option value="">Please select</option>
+      </select> --}}
+      <input type="text" id="cid" name="cid" class="form-control">
+  </div>
+  </div>
+  <br>
+
+<div class="row">
 <div class="col-md-4 offset-md-4">
     <label>Step 1 -> Select circuit</label>
     {{-- <select name="customer_id" id="customer_id" class="form-control customer_id" required>
