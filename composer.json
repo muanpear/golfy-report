@@ -13,15 +13,20 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "inertiajs/inertia-laravel": "^0.3.5",
         "laravel/framework": "^8.12",
+        "laravel/jetstream": "^2.2",
+        "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
-        "mikehaertl/phpwkhtmltopdf": "^2.4"
+        "laravel/ui": "^3.2",
+        "livewire/livewire": "^2.0",
+        "mikehaertl/phpwkhtmltopdf": "^2.4",
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
-        "laravel/ui": "^3.2",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3"

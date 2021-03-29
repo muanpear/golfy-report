@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GeneratorController;
-use App\Http\Controllers\ChartController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,18 +16,14 @@ use App\Http\Controllers\ChartController;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
 
-Route::get('generator', [GeneratorController::class, 'index']);
-Route::get('/customer-list', [GeneratorController::class, 'customer_list']);
-Route::get('/get-circuit', [GeneratorController::class, 'get_circuit']);
-
-Route::post('chart', [ChartController::class, 'index'])->name('chart.index');
-Route::get('chart/pdf', [ChartController::class, 'createPDF']);
-
-Route::post('edit-data', [ChartController::class, 'edit'])->name('edit-data.edit');
-Route::post('edit-update', [ChartController::class, 'update']);
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
