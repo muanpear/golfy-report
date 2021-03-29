@@ -28,3 +28,6 @@ Route::get('chart/pdf', [ChartController::class, 'createPDF']);
 
 Route::post('edit-data', [ChartController::class, 'edit'])->name('edit-data.edit');
 Route::post('edit-update', [ChartController::class, 'update']);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

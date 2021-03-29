@@ -142,7 +142,7 @@
         },
         labels: {
           formatter: function (value) {
-          return value + "kb/s";  /// คิดกันอีกทีนึง
+          return value + "Mbps";  /// คิดกันอีกทีนึง
           }
         },
       },
@@ -191,7 +191,7 @@
         },
         labels: {
           formatter: function (value) {
-          return value + "kb/s";  /// คิดกันอีกทีนึง
+          return value + "Mbps";  /// คิดกันอีกทีนึง
           }
         },
       },
