@@ -138,12 +138,12 @@
       yaxis: {
         
         title: {
-          text: 'Interface',
+          text: 'Interface ( {!! $rx_unit !!} )',
           rotate: -90,
         },
         labels: {
           formatter: function (value) {
-          return value.toFixed(2) + "{!! $rx_unit !!}";
+          return value.toFixed(1);
           }
         },
       },
@@ -158,13 +158,6 @@
         x: {
           format: 'd/M',
         },
-      },
-      grid: {
-        yaxis: {
-          lines: {
-            show: false
-          }
-        }
       },
     };
 
@@ -194,12 +187,12 @@
       },
       yaxis: {
         title: {
-          text: 'Interface',
+          text: 'Interface ( {!! $tx_unit !!} )',
           rotate: -90,
         },
         labels: {
           formatter: function (value) {
-          return value.toFixed(0) + "{!! $tx_unit !!}";  /// คิดกันอีกทีนึง
+          return value.toFixed(1);
           }
         },
       },
@@ -214,13 +207,6 @@
         x: {
           format: 'd/M',
         },
-      },
-      grid: {
-        yaxis: {
-          lines: {
-            show: false
-          }
-        }
       },
     };
 
