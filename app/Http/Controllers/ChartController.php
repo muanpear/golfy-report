@@ -13,7 +13,34 @@ use PDF;
 
 class ChartController extends Controller
 {
-   
+    public function unit($val_max){
+       if ($val_max < 1000000){
+            $unit = "Kbps";
+       }elseif ($val_max > 1000000 && $val_max < 1000000000){
+            $unit = "Mbps";
+       }elseif ($val_max > 1000000000){
+            $unit = "Gbps";
+       }else{
+            $unit = "bps";
+       }
+
+        return $unit;
+    }
+
+    public function data_graph($val_max, $val){
+        if ($val_max < 1000000){
+            $cal = $val / 1000;
+        }elseif ($val_max > 1000000 && $val_max < 1000000000){
+            $cal = $val / 1000 / 1000;
+        }elseif ($val_max > 1000000000){
+            $cal = $val / 1000 / 1000 / 1000;
+        }else{
+            $cal = $val;
+        }
+
+        return $cal;
+
+    }
 
     public function cal($val){
         $cal = $val / 1000 / 1000;
@@ -56,17 +83,18 @@ class ChartController extends Controller
                 $traffics[$key]['up'] = $traffic_data->deviceUp;
                 $traffics[$key]['down'] = $traffic_data->deviceDown;
                 $traffics[$key]['availbility'] = $traffic_data->deviceAva;
-            $traffics[$key]['rxMin'] = $this->cal($traffic_data->rxSpeedMin);
-            $traffics[$key]['rxMax'] = $this->cal($traffic_data->rxSpeedMax);
-            $traffics[$key]['rxAvg'] = $this->cal($traffic_data->rxSpeedAvg);
-            $traffics[$key]['txMin'] = $this->cal($traffic_data->txSpeedMin);
-            $traffics[$key]['txMax'] = $this->cal($traffic_data->txSpeedMax);
-            $traffics[$key]['txAvg'] = $this->cal($traffic_data->txSpeedAvg);
-            array_push($rxAvg, $this->cal($traffic_data->rxSpeedAvg));
-            array_push($rxMax, $this->cal($traffic_data->rxSpeedMax));
+            $traffics[$key]['rxMin'] = $traffic_data->rxSpeedMin;
+            $traffics[$key]['rxMax'] = $traffic_data->rxSpeedMax;
+            $traffics[$key]['rxAvg'] = $traffic_data->rxSpeedAvg;
+            $traffics[$key]['txMin'] = $traffic_data->txSpeedMin;
+            $traffics[$key]['txMax'] = $traffic_data->txSpeedMax;
+            $traffics[$key]['txAvg'] = $traffic_data->txSpeedAvg;
 
-            array_push($txAvg, $this->cal($traffic_data->txSpeedAvg));
-            array_push($txMax, $this->cal($traffic_data->txSpeedMax));
+            array_push($rxAvg, $traffic_data->rxSpeedAvg);
+            array_push($rxMax, $traffic_data->rxSpeedMax);
+
+            array_push($txAvg, $traffic_data->txSpeedAvg);
+            array_push($txMax, $traffic_data->txSpeedMax);
 
             }elseif(empty($traffic_data)){
                 $traffics[$key]['up'] = null;
@@ -84,16 +112,50 @@ class ChartController extends Controller
             array_push($txAvg, 0);
             array_push($txMax, 0);
             }
-        }  
+        } 
+
+        ///////////// RX /////////////////
+        $rx_Max = max($rxMax);
+        $rx_unit = $this->unit($rx_Max);
+        $rxMax_cal = [];
+        $rxAvg_cal = [];
+
+        foreach ($rxMax as $key => $val1) {
+            array_push($rxMax_cal, $this->data_graph($rx_Max, $val1));
+        }
+
+        foreach ($rxAvg as $key => $val2) {
+            array_push($rxAvg_cal, $this->data_graph($rx_Max, $val2));
+        }
+
+        ///////////// TX //////////////////
+        $tx_Max = max($txMax);
+        $tx_unit = $this->unit($tx_Max);
+        $txMax_cal = [];
+        $txAvg_cal = [];
+
+        foreach ($txMax as $key => $val3) {
+            array_push($txMax_cal, $this->data_graph($tx_Max, $val3));
+        }
+
+        foreach ($rxAvg as $key => $val4) {
+            array_push($txAvg_cal, $this->data_graph($tx_Max, $val4));
+        }
+
+        // dd($rxMax_cal);
+        // dd($this->unit(max($rxMax)));
+
         
     
        $traffics_data = json_encode($traffics);
 
     	return view('chart')->with('dates',json_encode($dates,JSON_NUMERIC_CHECK))
-        ->with('rxAvg',json_encode($rxAvg,JSON_NUMERIC_CHECK))
-        ->with('rxMax',json_encode($rxMax,JSON_NUMERIC_CHECK))
-        ->with('txAvg',json_encode($txAvg,JSON_NUMERIC_CHECK))
-        ->with('txMax',json_encode($txMax,JSON_NUMERIC_CHECK))
+        ->with('rxAvg_cal',json_encode($rxAvg,JSON_NUMERIC_CHECK))
+        ->with('rxMax_cal',json_encode($rxMax,JSON_NUMERIC_CHECK))
+        ->with('txAvg_cal',json_encode($txAvg,JSON_NUMERIC_CHECK))
+        ->with('txMax_cal',json_encode($txMax,JSON_NUMERIC_CHECK))
+        ->with('rx_unit',$rx_unit)
+        ->with('tx_unit',$tx_unit)
         ->with('daterange',$request->daterange)
         ->with('device',$device)
         ->with('traffics',json_decode($traffics_data, true));

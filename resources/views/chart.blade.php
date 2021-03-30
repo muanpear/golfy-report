@@ -120,10 +120,10 @@
       colors: ['#546E7A', '#E91E63'],
       series: [{
         name: 'Avg',
-        data: {!! $rxAvg !!}
+        data: {!! $rxAvg_cal !!}
         }, {
         name: 'Max',
-        data: {!! $rxMax !!}
+        data: {!! $rxMax_cal !!}
       }],
       chart: {
         height: 250,
@@ -136,13 +136,14 @@
         curve: 'smooth'
       },
       yaxis: {
+        
         title: {
           text: 'Interface',
           rotate: -90,
         },
         labels: {
           formatter: function (value) {
-          return value + "kb/s";  /// คิดกันอีกทีนึง
+          return value.toFixed(0) + "{!! $rx_unit !!}";  /// คิดกันอีกทีนึง
           }
         },
       },
@@ -157,6 +158,13 @@
         x: {
           format: 'd/M',
         },
+      },
+      grid: {
+        yaxis: {
+          lines: {
+            show: false
+          }
+        }
       },
     };
 
@@ -169,10 +177,10 @@
       colors: ['#546E7A', '#E91E63'],
       series: [{
         name: 'Avg',
-        data: {!! $txAvg !!}
+        data: {!! $txAvg_cal !!}
         }, {
         name: 'Max',
-        data: {!! $txMax !!}
+        data: {!! $txMax_cal !!}
       }],
       chart: {
         height: 250,
@@ -191,7 +199,7 @@
         },
         labels: {
           formatter: function (value) {
-          return value + "kb/s";  /// คิดกันอีกทีนึง
+          return value.toFixed(0) + "{!! $tx_unit !!}";  /// คิดกันอีกทีนึง
           }
         },
       },
@@ -206,6 +214,13 @@
         x: {
           format: 'd/M',
         },
+      },
+      grid: {
+        yaxis: {
+          lines: {
+            show: false
+          }
+        }
       },
     };
 
