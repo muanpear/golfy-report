@@ -6,6 +6,7 @@
     <script  type="text/javascript"src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -28,14 +29,14 @@
 	</style>
 </head>
 <body>
-    <div class="container-fluid">
-      <table width="100%" style="background-color: #6699FF;">
+    {{-- <div class="container-fluid"> --}}
+      <center><table>
         <tr>
-          <th><img src="https://1000logos.net/wp-content/uploads/2017/12/Pornhub-Logo.png" width="128" height="64"></th>
-          <th><h4 style="padding: 10px; text-align:right">Interface Summary Report</h4></th>
+          <th><img src="{{ asset('images/header.jpg') }}" width="968"></th>
+          {{-- <th><h4 style="padding: 10px; text-align:right">Interface Summary Report</h4></th> --}}
         </tr>
-      </table>
-    </div>
+      </table></center>
+    {{-- </div> --}}
     <br>
 
     <div class="container">
@@ -54,7 +55,7 @@
       </table></center>
     </div>
 
-      <center><table width="80%">
+      <center><table width="70%">
         <tr>
           <th width="50%"><div id="chart"></div></th>
           <th width="50%"><div id="chart1"></div></th>
@@ -79,12 +80,12 @@
               <th colspan="3"><center>Transmit(Tx)</center></th>
             </tr>
 <tr>
-  <th><center>Rx Min</center></th>
-  <th><center>Rx Avg</center></th>
-  <th><center>Rx Max</center></th>
-  <th><center>Tx Min</center></th>
-  <th><center>Tx Avg</center></th>
-  <th><center>Tx Max</center></th>
+  <th><center>Rx Min (bps)</center></th>
+  <th><center>Rx Avg (bps)</center></th>
+  <th><center>Rx Max (bps)</center></th>
+  <th><center>Tx Min (bps)</center></th>
+  <th><center>Tx Avg (bps)</center></th>
+  <th><center>Tx Max (bps)</center></th>
 </tr>
 </thead>
 <tbody>
@@ -94,12 +95,12 @@
   <td><center>{{ $vl['up'] }}</center></td>
   <td><center>{{ $vl['down'] }}</center></td>
   <td><center>{{ $vl['availbility'] }}</center></td>
-  <td><center>{{ $vl['rxMin'] }}</center></td>
-  <td><center>{{ $vl['rxAvg'] }}</center></td>
-  <td><center>{{ $vl['rxMax'] }}</center></td>
-  <td><center>{{ $vl['txMin'] }}</center></td>
-  <td><center>{{ $vl['txAvg'] }}</center></td>
-  <td><center>{{ $vl['txMax'] }}</center></td>
+  <td><center>{{ number_format($vl['rxMin'], 2) }}</center></td>
+  <td><center>{{ number_format($vl['rxAvg'], 2) }}</center></td>
+  <td><center>{{ number_format($vl['rxMax'], 2) }}</center></td>
+  <td><center>{{ number_format($vl['txMin'], 2) }}</center></td>
+  <td><center>{{ number_format($vl['txAvg'], 2) }}</center></td>
+  <td><center>{{ number_format($vl['txMax'], 2) }}</center></td>
 </tr>
 
 @endforeach
