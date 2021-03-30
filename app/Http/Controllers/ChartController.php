@@ -16,7 +16,7 @@ class ChartController extends Controller
     public function unit($val_max){
        if ($val_max < 1000000){
             $unit = "Kbps";
-       }elseif ($val_max > 1000000 && $val_max < 1000000000){
+       }elseif ($val_max > 1000000 and $val_max < 1000000000){
             $unit = "Mbps";
        }elseif ($val_max > 1000000000){
             $unit = "Gbps";
@@ -30,7 +30,7 @@ class ChartController extends Controller
     public function data_graph($val_max, $val){
         if ($val_max < 1000000){
             $cal = $val / 1000;
-        }elseif ($val_max > 1000000 && $val_max < 1000000000){
+        }elseif ($val_max > 1000000 and $val_max < 1000000000){
             $cal = $val / 1000 / 1000;
         }elseif ($val_max > 1000000000){
             $cal = $val / 1000 / 1000 / 1000;
@@ -127,7 +127,6 @@ class ChartController extends Controller
         foreach ($rxAvg as $key => $val2) {
             array_push($rxAvg_cal, $this->data_graph($rx_Max, $val2));
         }
-
         ///////////// TX //////////////////
         $tx_Max = max($txMax);
         $tx_unit = $this->unit($tx_Max);
@@ -150,10 +149,10 @@ class ChartController extends Controller
        $traffics_data = json_encode($traffics);
 
     	return view('chart')->with('dates',json_encode($dates,JSON_NUMERIC_CHECK))
-        ->with('rxAvg_cal',json_encode($rxAvg,JSON_NUMERIC_CHECK))
-        ->with('rxMax_cal',json_encode($rxMax,JSON_NUMERIC_CHECK))
-        ->with('txAvg_cal',json_encode($txAvg,JSON_NUMERIC_CHECK))
-        ->with('txMax_cal',json_encode($txMax,JSON_NUMERIC_CHECK))
+        ->with('rxAvg_cal',json_encode($rxAvg_cal,JSON_NUMERIC_CHECK))
+        ->with('rxMax_cal',json_encode($rxMax_cal,JSON_NUMERIC_CHECK))
+        ->with('txAvg_cal',json_encode($txAvg_cal,JSON_NUMERIC_CHECK))
+        ->with('txMax_cal',json_encode($txMax_cal,JSON_NUMERIC_CHECK))
         ->with('rx_unit',$rx_unit)
         ->with('tx_unit',$tx_unit)
         ->with('daterange',$request->daterange)

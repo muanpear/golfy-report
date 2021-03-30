@@ -143,7 +143,7 @@
         },
         labels: {
           formatter: function (value) {
-          return value.toFixed(0) + "{!! $rx_unit !!}";  /// คิดกันอีกทีนึง
+          return value.toFixed(2) + "{!! $rx_unit !!}";
           }
         },
       },
