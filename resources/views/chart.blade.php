@@ -29,14 +29,14 @@
 	</style>
 </head>
 <body>
-    {{-- <div class="container-fluid"> --}}
+    <div class="container-fluid">
       <center><table>
         <tr>
           <th><img src="{{ asset('images/header.jpg') }}" width="968"></th>
           {{-- <th><h4 style="padding: 10px; text-align:right">Interface Summary Report</h4></th> --}}
         </tr>
       </table></center>
-    {{-- </div> --}}
+    </div>
     <br>
 
     <div class="container">
@@ -113,6 +113,14 @@
     </div>
 	</div>
 
+  <div class="container-fluid">
+    <center><table>
+      <tr>
+        <th><img src="{{ asset('images/ft.jpg') }}" width="968"></th>
+        {{-- <th><h4 style="padding: 10px; text-align:right">Interface Summary Report</h4></th> --}}
+      </tr>
+    </table></center>
+  </div>
 
 <script type="text/javascript">
   $( document ).ready(function() {
