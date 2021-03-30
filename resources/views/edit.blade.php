@@ -86,15 +86,15 @@
   @foreach ($traffics as $key => $vl)
   <tr>
   <td><center>{{ $vl["date"] }}<input type="text" name="txtTrafficID_{{$key}}" id="txtTrafficID_{{$key}}" value="{{ $vl["id"] }}"></center></td>
-  <td><center><input type="text" name="txtUp_{{$key}}" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
-  <td><center><input type="text" name="txtDown_{{$key}}" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
-  <td><center><input type="text" name="txtAvailbility_{{$key}}" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
-  <td><center><input type="text" name="txtRxMin_{{$key}}" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
-  <td><center><input type="text" name="txtRxAvg_{{$key}}" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
-  <td><center><input type="text" name="txtRxMax_{{$key}}" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
-  <td><center><input type="text" name="txtTxMin_{{$key}}" id="txtTxMin_{{$key}}" value="{{ $vl["txMin"] }}"></center></td>
-  <td><center><input type="text" name="txtTxAvg_{{$key}}" id="txtTxAvg_{{$key}}" value="{{ $vl["txAvg"] }}"></center></td>
-  <td><center><input type="text" name="txtTxMax_{{$key}}" id="txtTxMax_{{$key}}" value="{{ $vl["txMax"] }}"></center></td>
+  <td><center><input type='number' class="usd_input" step='0.01' name="txtUp" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center>{{ $vl["up"] }}</td>
+  <td><center><input type='number' class="usd_input" step='0.01' name="txtDown" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
+  <td><center><input type="text" name="txtAvailbility" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
+  <td><center><input type="text" name="txtRxMin" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
+  <td><center><input type="text" name="txtRxAvg" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
+  <td><center><input type="text" name="txtRxMax" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
+  <td><center><input type="text" name="txtTxMin" id="txtTxMin_{{$key}}" value="{{ $vl["txMin"] }}"></center></td>
+  <td><center><input type="text" name="txtTxAvg" id="txtTxAvg_{{$key}}" value="{{ $vl["txAvg"] }}"></center></td>
+  <td><center><input type="text" name="txtTxMax" id="txtTxMax_{{$key}}" value="{{ $vl["txMax"] }}"></center></td>
 </tr>
 
 @endforeach
@@ -113,7 +113,22 @@
 
 <script type="text/javascript">
   $( document ).ready(function() {
-    
+    $('.usd_input').mask('00000.00', { reverse: true });
+    $('input[name="txtDown"]').on('keyup change paste keydown', function(){
+    var $down = $(this);
+
+    var no = $down.attr('id').split('_');
+    // let runon = 
+    let on_service = (24.00 - $down.val());
+    $('#txtUp_'+no[1]).val(on_service);
+
+    let ava = (24.00 - $down.val())*100/24;
+     
+    $('#txtAvailbility_0').val(ava)
+    console.log($down.attr('id')); // ID; for referencing 
+    // console.log(arr[1]); // value of this input
+
+  });
 });
 
 </script>
