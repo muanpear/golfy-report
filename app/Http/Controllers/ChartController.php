@@ -67,9 +67,12 @@ class ChartController extends Controller
         // dd($period);
         $dates = [];
         
+        $availability = [];
+        $rxMin = [];
         $rxAvg = [];
         $rxMax = [];
 
+        $txMin = [];
         $txAvg = [];
         $txMax = [];
 
@@ -90,10 +93,14 @@ class ChartController extends Controller
             $traffics[$key]['txMin'] = $traffic_data->txSpeedMin;
             $traffics[$key]['txMax'] = $traffic_data->txSpeedMax;
             $traffics[$key]['txAvg'] = $traffic_data->txSpeedAvg;
+            
+            array_push($availability, $traffic_data->deviceAva);
 
+            array_push($rxMin, $traffic_data->rxSpeedMin);
             array_push($rxAvg, $traffic_data->rxSpeedAvg);
             array_push($rxMax, $traffic_data->rxSpeedMax);
-
+            
+            array_push($txMin, $traffic_data->txSpeedMin);
             array_push($txAvg, $traffic_data->txSpeedAvg);
             array_push($txMax, $traffic_data->txSpeedMax);
 
@@ -107,19 +114,25 @@ class ChartController extends Controller
             $traffics[$key]['txMin'] = null;
             $traffics[$key]['txMax'] = null;
             $traffics[$key]['txAvg'] = null;
+            array_push($availability, 0);
+            array_push($rxMin, 0);
             array_push($rxAvg, 0);
             array_push($rxMax, 0);
-
+            
+            array_push($txMin, 0);
             array_push($txAvg, 0);
             array_push($txMax, 0);
             }
         } 
 
         ///////////// RX /////////////////
+        $rx_Min = min($rxMin);
         $rx_Max = max($rxMax);
         $rx_unit = $this->unit($rx_Max);
         $rxMax_cal = [];
         $rxAvg_cal = [];
+        $sum_rx_Avg = array_sum($rxAvg);
+        $rx_Avg_cal =  $sum_rx_Avg/($key+1);
 
         foreach ($rxMax as $key => $val1) {
             array_push($rxMax_cal, $this->data_graph($rx_Max, $val1));
@@ -129,22 +142,25 @@ class ChartController extends Controller
             array_push($rxAvg_cal, $this->data_graph($rx_Max, $val2));
         }
         ///////////// TX //////////////////
+        $tx_Min = min($txMin);
         $tx_Max = max($txMax);
         $tx_unit = $this->unit($tx_Max);
         $txMax_cal = [];
         $txAvg_cal = [];
+        $sum_tx_Avg = array_sum($txAvg);
+        $tx_Avg_cal =  $sum_tx_Avg/($key+1);
 
         foreach ($txMax as $key => $val3) {
             array_push($txMax_cal, $this->data_graph($tx_Max, $val3));
         }
 
-        foreach ($rxAvg as $key => $val4) {
+        foreach ($txAvg as $key => $val4) {
             array_push($txAvg_cal, $this->data_graph($tx_Max, $val4));
         }
 
-        // dd($rxMax_cal);
-        // dd($this->unit(max($rxMax)));
-
+        ////////// availability ///////////////////
+        $sum_availability = array_sum($availability);
+        $availability_cal =  $sum_availability/($key+1);
         
     
        $traffics_data = json_encode($traffics);
@@ -154,6 +170,13 @@ class ChartController extends Controller
         ->with('rxMax_cal',json_encode($rxMax_cal,JSON_NUMERIC_CHECK))
         ->with('txAvg_cal',json_encode($txAvg_cal,JSON_NUMERIC_CHECK))
         ->with('txMax_cal',json_encode($txMax_cal,JSON_NUMERIC_CHECK))
+        ->with('availability_cal',$availability_cal)
+        ->with('rx_min',$rx_Min)
+        ->with('rx_Avg_cal',$rx_Avg_cal)
+        ->with('rx_max',$rx_Max)
+        ->with('tx_min',$tx_Min)
+        ->with('tx_Avg_cal',$tx_Avg_cal)
+        ->with('tx_max',$tx_Max)
         ->with('rx_unit',$rx_unit)
         ->with('tx_unit',$tx_unit)
         ->with('daterange',$request->daterange)

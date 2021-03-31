@@ -47,10 +47,10 @@
         </tr>
         <tr>
           <td width="50%"><p>DESCRIPTION  : {{$device->deviceDecription}}</p></td>
-          <td width="50%"><p>GENERATE BY : {{Auth::user()->name}}</p></td>
+          {{-- <td width="50%"><p>GENERATE BY : {{ucfirst(Auth::user()->name)}}</p></td> --}}
         </tr>
         <tr>
-          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}}</p></td>
+          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}} {{$device->deviceUnit}}</p></td>
         </tr>
       </table></center>
     </div>
@@ -104,7 +104,18 @@
 </tr>
 
 @endforeach
- 
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <th><center>{{number_format($availability_cal, 2)}}</center></th>
+  <th><center>{{number_format($rx_min, 2)}}</center></th>
+  <th><center>{{number_format($rx_Avg_cal, 2)}}</center></th>
+  <th><center>{{number_format($rx_max, 2)}}</center></th>
+  <th><center>{{number_format($tx_min, 2)}}</center></th>
+  <th><center>{{number_format($tx_Avg_cal, 2)}}</center></td>
+  <th><center>{{number_format($tx_max, 2)}}</center></th>
+</tr>
 </tbody>
 </table>
     </div>
