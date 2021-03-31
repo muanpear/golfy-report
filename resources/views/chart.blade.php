@@ -141,11 +141,11 @@
   $( document ).ready(function() {
     //// rx
     var options = {
-      colors: ['#546E7A', '#E91E63'],
+      colors: ['#4BD0B8', '#546E7A', '#E91E63'],
       series: [{
-        // name: 'Min',
-        // data: {!! $rxMin_cal !!}
-        // },
+        name: 'Min',
+        data: {!! $rxMin_cal !!}
+        }, {
         name: 'Avg',
         data: {!! $rxAvg_cal !!}
         }, {
@@ -160,7 +160,8 @@
         enabled: false
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'smooth',
+        width: 2,
       },
       yaxis: {
         
@@ -194,11 +195,11 @@
 
     //// tx
     var options1 = {
-      colors: ['#546E7A', '#E91E63'],
+      colors: ['#4BD0B8','#546E7A', '#E91E63'],
       series: [{
-        // name: 'Min',
-        // data: {!! $txMin_cal !!}
-        // },
+        name: 'Min',
+        data: {!! $txMin_cal !!}
+        }, {
         name: 'Avg',
         data: {!! $txAvg_cal !!}
         }, {
@@ -213,7 +214,8 @@
         enabled: false
       },
       stroke: {
-        curve: 'smooth'
+        curve: 'smooth',
+        width: 2,
       },
       yaxis: {
         title: {
