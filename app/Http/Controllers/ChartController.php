@@ -132,6 +132,7 @@ class ChartController extends Controller
         $rxMin_cal = [];
         $rxMax_cal = [];
         $rxAvg_cal = [];
+
         $sum_rx_Avg = array_sum($rxAvg);
         $rx_Avg_cal =  $sum_rx_Avg/($key+1);
 
@@ -172,7 +173,15 @@ class ChartController extends Controller
         $sum_availability = array_sum($availability);
         $availability_cal =  $sum_availability/($key+1);
         
-    
+        /////////// data in chart /////////////////
+        $rxMin_chart = min($rxMin_cal);
+        $rxMax_chart = max($rxMax_cal);
+        $rxAvg_chart = array_sum($rxAvg_cal)/($key+1);
+
+        $txMin_chart = min($txMin_cal);
+        $txMax_chart = max($txMax_cal);
+        $txAvg_chart = array_sum($txAvg_cal)/($key+1);
+        
        $traffics_data = json_encode($traffics);
 
     	return view('chart')->with('dates',json_encode($dates,JSON_NUMERIC_CHECK))
@@ -191,6 +200,12 @@ class ChartController extends Controller
         ->with('tx_max',$tx_Max)
         ->with('rx_unit',$rx_unit)
         ->with('tx_unit',$tx_unit)
+        ->with('rxMin_chart',$rxMin_chart)
+        ->with('rxMax_chart',$rxMax_chart)
+        ->with('rxAvg_chart',$rxAvg_chart)
+        ->with('txMin_chart',$txMin_chart)
+        ->with('txMax_chart',$txMax_chart)
+        ->with('txAvg_chart',$txAvg_chart)
         ->with('daterange',$request->daterange)
         ->with('device',$device)
         ->with('traffics',json_decode($traffics_data, true));
