@@ -46,11 +46,11 @@
           <td width="50%"><p>REPORT DATE : {{$daterange}}</p></td>
         </tr>
         <tr>
-          <td width="50%"><p>DESCRIPTION  : {{$device->deviceDecription}}</p></td>
+          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}} MBps</p></td>
           {{-- <td width="50%"><p>GENERATE BY : {{ucfirst(Auth::user()->name)}}</p></td> --}}
         </tr>
         <tr>
-          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}} {{$device->deviceUnit}}</p></td>
+          <td width="50%"><p>DESCRIPTION  : {{$device->deviceDecription}}</p></td>
         </tr>
       </table></center>
     </div>
@@ -59,6 +59,10 @@
         <tr>
           <th width="50%"><div id="chart"></div></th>
           <th width="50%"><div id="chart1"></div></th>
+        </tr>
+        <tr>
+          <td width="50%"><center><small>Input Utilization: Min {{number_format($rxMin_chart, 2) }} {{$rx_unit}}, Avg {{number_format($rxAvg_chart, 2) }} {{$rx_unit}}, Max {{number_format($rxMax_chart, 2) }} {{$rx_unit}}</small></center></td>
+          <td width="50%"><center><small>Output Utilization: Min {{number_format($txMin_chart, 2) }} {{$tx_unit}}, Avg {{number_format($txAvg_chart, 2) }} {{$tx_unit}}, Max {{number_format($txMax_chart, 2) }} {{$tx_unit}}</small></center></td>
         </tr>
       </table></center>
      
@@ -95,12 +99,12 @@
   <td><center>{{ $vl['up'] }}</center></td>
   <td><center>{{ $vl['down'] }}</center></td>
   <td><center>{{ $vl['availbility'] }}</center></td>
-  <td><center>{{ number_format($vl['rxMin'], 2) }}</center></td>
-  <td><center>{{ number_format($vl['rxAvg'], 2) }}</center></td>
-  <td><center>{{ number_format($vl['rxMax'], 2) }}</center></td>
-  <td><center>{{ number_format($vl['txMin'], 2) }}</center></td>
-  <td><center>{{ number_format($vl['txAvg'], 2) }}</center></td>
-  <td><center>{{ number_format($vl['txMax'], 2) }}</center></td>
+  <td><center>{{ number_format($vl['rxMin'], 0) }}</center></td>
+  <td><center>{{ number_format($vl['rxAvg'], 0) }}</center></td>
+  <td><center>{{ number_format($vl['rxMax'], 0) }}</center></td>
+  <td><center>{{ number_format($vl['txMin'], 0) }}</center></td>
+  <td><center>{{ number_format($vl['txAvg'], 0) }}</center></td>
+  <td><center>{{ number_format($vl['txMax'], 0) }}</center></td>
 </tr>
 
 @endforeach
@@ -109,12 +113,12 @@
   <td></td>
   <td></td>
   <th><center>{{number_format($availability_cal, 2)}}</center></th>
-  <th><center>{{number_format($rx_min, 2)}}</center></th>
-  <th><center>{{number_format($rx_Avg_cal, 2)}}</center></th>
-  <th><center>{{number_format($rx_max, 2)}}</center></th>
-  <th><center>{{number_format($tx_min, 2)}}</center></th>
-  <th><center>{{number_format($tx_Avg_cal, 2)}}</center></td>
-  <th><center>{{number_format($tx_max, 2)}}</center></th>
+  <th><center>{{number_format($rx_min, 0)}}</center></th>
+  <th><center>{{number_format($rx_Avg_cal, 0)}}</center></th>
+  <th><center>{{number_format($rx_max, 0)}}</center></th>
+  <th><center>{{number_format($tx_min, 0)}}</center></th>
+  <th><center>{{number_format($tx_Avg_cal, 0)}}</center></td>
+  <th><center>{{number_format($tx_max, 0)}}</center></th>
 </tr>
 </tbody>
 </table>
@@ -139,6 +143,9 @@
     var options = {
       colors: ['#546E7A', '#E91E63'],
       series: [{
+        // name: 'Min',
+        // data: {!! $rxMin_cal !!}
+        // },
         name: 'Avg',
         data: {!! $rxAvg_cal !!}
         }, {
@@ -189,6 +196,9 @@
     var options1 = {
       colors: ['#546E7A', '#E91E63'],
       series: [{
+        // name: 'Min',
+        // data: {!! $txMin_cal !!}
+        // },
         name: 'Avg',
         data: {!! $txAvg_cal !!}
         }, {
