@@ -25,14 +25,32 @@
     .table-sm {
       font-size: 10px;
     }
+    tr.nook {
+  border-collapse:separate; 
+  border-spacing: 0 1em;
+}
+td.pn{
+  padding: 10px 0px 10px 0px;
+}
+    tr.nook:nth-child(even) { border-spacing: 10px; border-collapse: separate; background-color:#FF99CC;}
 	</style>
 </head>
 <body>
     <div class="container-fluid">
-      <table width="100%" style="background-color: #ff9e66;">
+      <table width="100%" style="background-color: #aca29d;">
         <tr>
-          <th></th>
-          <th><h4 style="padding: 10px; text-align:right">Edit</h4></th>
+          <th><h4 style="padding: 10px; text-align:left">Edit</h4></th>
+          <th>
+            <h4 style="padding: 10px; text-align:right">
+            <form action="{{ URL::to('chart') }}" method="get" target="_blank">
+              @csrf
+            <input type="hidden" id="customer" name="customer" required value="{{$device->groupID}}">
+            <input type="hidden" id="circuit" name="circuit" required value="{{$device->deviceID}}">
+            <input type="hidden" id="daterange" name="daterange" required value="{{$daterange}}"> 
+            <button type="submit" class="btn btn-info">Graph it !!!</button> 
+            </form>
+            </h4>
+          </th>
         </tr>
       </table>
     </div>
@@ -42,19 +60,22 @@
       <center><table width="80%">
         <tr>
           <td width="50%"><p>CIRCUIT NO. : {{$device->deviceName}}</p></td>
-          <td width="50%"><p>REPORT DATE : {{$daterange}}</p></td>
+          <td width="50%"><p>DATE : {{$daterange}}</p></td>
         </tr>
         <tr>
           <td width="50%"><p>DESCRIPTION  : {{$device->deviceDecription}}</p></td>
+          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}}</p></td>
+        </tr>
+        <tr>
+          <td width="50%">
+          </td>
           <td width="50%">
             <form action="{{ URL::to('edit-update') }}" method="post">
             @csrf
-            <button type="submit" class="btn btn-outline-primary">Edit !!!</button>
-            <button type="type" class="btn btn-outline-warning">Clear !!!</button>
+            <button type="submit" class="btn btn-outline-primary">Save Edit !!!</button>
+            <button type="type" class="btn btn-outline-warning">Back !!!</button>
+            {{-- <button type="type" class="btn btn-outline-info">Graph it !!!</button> --}}
           </td>
-        </tr>
-        <tr>
-          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}}</p></td>
         </tr>
       </table></center>
     </div>
@@ -73,32 +94,38 @@
               <th colspan="3"><center>Receive(Rx)</center></th>
               <th colspan="3"><center>Transmit(Tx)</center></th>
             </tr>
-<tr>
-  <th><center>Rx Min</center></th>
-  <th><center>Rx Avg</center></th>
-  <th><center>Rx Max</center></th>
-  <th><center>Tx Min</center></th>
-  <th><center>Tx Avg</center></th>
-  <th><center>Tx Max</center></th>
-</tr>
-</thead>
-<tbody>
-  @foreach ($traffics as $key => $vl)
-  <tr>
-  <td><center>{{ $vl["date"] }}<input type="text" name="txtTrafficID_{{$key}}" id="txtTrafficID_{{$key}}" value="{{ $vl["id"] }}"></center></td>
-  <td><center><input type='number' class="usd_input" step='0.01' name="txtUp" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center>{{ $vl["up"] }}</td>
-  <td><center><input type='number' class="usd_input" step='0.01' name="txtDown" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
-  <td><center><input type="text" name="txtAvailbility" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
-  <td><center><input type="text" name="txtRxMin" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
-  <td><center><input type="text" name="txtRxAvg" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
-  <td><center><input type="text" name="txtRxMax" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
-  <td><center><input type="text" name="txtTxMin" id="txtTxMin_{{$key}}" value="{{ $vl["txMin"] }}"></center></td>
-  <td><center><input type="text" name="txtTxAvg" id="txtTxAvg_{{$key}}" value="{{ $vl["txAvg"] }}"></center></td>
-  <td><center><input type="text" name="txtTxMax" id="txtTxMax_{{$key}}" value="{{ $vl["txMax"] }}"></center></td>
+            <tr>
+              <th><center>Rx Min</center></th>
+              <th><center>Rx Avg</center></th>
+              <th><center>Rx Max</center></th>
+              <th><center>Tx Min</center></th>
+              <th><center>Tx Avg</center></th>
+              <th><center>Tx Max</center></th>
+            </tr>
+          </thead>
+          <tbody>
+          @foreach ($traffics as $key => $vl)
+            <tr class="nook">
+              <td class="pn"><center>
+                {{ $vl["date"] }}
+                <input type="hidden" name="txtTrafficID[]" id="txtTrafficID_{{$key}}" value="{{ $vl["id"] }}">
+                <input type="hidden" name="txtDate[]" id="txtDate{{$key}}" value="{{ $vl["date"] }}">
+              </center></td>
+  <td class="pn"><center><input type='number' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
+  <td class="pn"><center><input type='number' class="floatNumberField" name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
+  <td class="pn"><center><input type="number" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
+  <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
+  <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
+  <td class="pn"><center><input type="number" name="txtRxMax[]" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
+  <td class="pn"><center><input type="number" name="txtTxMin[]" id="txtTxMin_{{$key}}" value="{{ $vl["txMin"] }}"></center></td>
+  <td class="pn"><center><input type="number" name="txtTxAvg[]" id="txtTxAvg_{{$key}}" value="{{ $vl["txAvg"] }}"></center></td>
+  <td class="pn"><center><input type="number" name="txtTxMax[]" id="txtTxMax_{{$key}}" value="{{ $vl["txMax"] }}"></center></td>
 </tr>
 
 @endforeach
-  <input type="text" name="txtCount" id="txtCount" value="{{ $key }}">
+  <input type="hidden" name="txtDeviceID" id="txtDeviceID" value="{{ $device->deviceID }}">
+  <input type="hidden" name="txtDeviceName" id="txtDeviceName" value="{{ $device->deviceName }}">
+  <input type="hidden" name="txtCount" id="txtCount" value="{{ $key }}">
 </tbody>
 </table>
     </div>
@@ -113,19 +140,23 @@
 
 <script type="text/javascript">
   $( document ).ready(function() {
-    $('.usd_input').mask('00000.00', { reverse: true });
-    $('input[name="txtDown"]').on('keyup change paste keydown', function(){
+    $(".floatNumberField").change(function() {
+            $(this).val(parseFloat($(this).val()).toFixed(2));
+        });
+
+    $('input[name="txtDown[]"]').on('keyup change paste keydown', function(){
     var $down = $(this);
 
     var no = $down.attr('id').split('_');
     // let runon = 
     let on_service = (24.00 - $down.val());
-    $('#txtUp_'+no[1]).val(on_service);
+    $('#txtUp_'+no[1]).val(parseFloat(on_service).toFixed(2));
 
     let ava = (24.00 - $down.val())*100/24;
-     
-    $('#txtAvailbility_0').val(ava)
-    console.log($down.attr('id')); // ID; for referencing 
+    
+    $('#txtAvailbility_'+no[1]).val(parseFloat(ava).toFixed(2));
+
+    // console.log($down.attr('id')); // ID; for referencing 
     // console.log(arr[1]); // value of this input
 
   });

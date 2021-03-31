@@ -12,7 +12,7 @@
     <br>
 
     <div class="row">
-      <form action="{{ URL::to('chart') }}" method="post">
+      <form action="{{ URL::to('chart') }}" method="get" target="_blank">
       @csrf
       <div class="col-md-4 offset-md-4">
         <label>Step 1 -> Select Customer</label>
@@ -57,7 +57,7 @@
       <br>
 
       <div class="row">
-        <form action="{{ URL::to('edit-data') }}" method="post">
+        <form action="{{ URL::to('edit-data') }}" method="get" target="_blank">
         @csrf
         <div class="col-md-4 offset-md-4">
           <label>Step 1 -> Select Customer</label>

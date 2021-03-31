@@ -9,7 +9,8 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Traffic;
 use App\Models\Device;
-use PDF;
+use Redirect;
+use AUTH;
 
 class ChartController extends Controller
 {
@@ -262,15 +263,17 @@ return $pdf = PDF::loadView('chart',['traffics'=>json_decode($traffics, true), '
             $traffic_data = Traffic::where('deviceID', $circuit)->where('pollTimeUtc','like', '%' . $date->format('Y-m-d') . '%')->orderBy('pollTimeUtc','DESC')->first();
             if (!empty($traffic_data)){
                 $traffics[$key]['id'] = $traffic_data->id;
+                $traffics[$key]['deviceID'] = $traffic_data->deviceID;
+                $traffics[$key]['deviceName'] = $traffic_data->deviceName;
                 $traffics[$key]['up'] = $traffic_data->deviceUp;
                 $traffics[$key]['down'] = $traffic_data->deviceDown;
                 $traffics[$key]['availbility'] = $traffic_data->deviceAva;
-            $traffics[$key]['rxMin'] = $this->cal($traffic_data->rxSpeedMin);
-            $traffics[$key]['rxMax'] = $this->cal($traffic_data->rxSpeedMax);
-            $traffics[$key]['rxAvg'] = $this->cal($traffic_data->rxSpeedAvg);
-            $traffics[$key]['txMin'] = $this->cal($traffic_data->txSpeedMin);
-            $traffics[$key]['txMax'] = $this->cal($traffic_data->txSpeedMax);
-            $traffics[$key]['txAvg'] = $this->cal($traffic_data->txSpeedAvg);
+            $traffics[$key]['rxMin'] = $traffic_data->rxSpeedMin;
+            $traffics[$key]['rxMax'] = $traffic_data->rxSpeedMax;
+            $traffics[$key]['rxAvg'] = $traffic_data->rxSpeedAvg;
+            $traffics[$key]['txMin'] = $traffic_data->txSpeedMin;
+            $traffics[$key]['txMax'] = $traffic_data->txSpeedMax;
+            $traffics[$key]['txAvg'] = $traffic_data->txSpeedAvg;
             array_push($rxAvg, $this->cal($traffic_data->rxSpeedAvg));
             array_push($rxMax, $this->cal($traffic_data->rxSpeedMax));
 
@@ -279,6 +282,8 @@ return $pdf = PDF::loadView('chart',['traffics'=>json_decode($traffics, true), '
 
             }elseif(empty($traffic_data)){
                 $traffics[$key]['id']= null;
+                $traffics[$key]['deviceID'] = null;
+                $traffics[$key]['deviceName'] = null;
                 $traffics[$key]['up'] = null;
                 $traffics[$key]['down'] = null;
                 $traffics[$key]['availbility'] = null;
@@ -310,30 +315,55 @@ return $pdf = PDF::loadView('chart',['traffics'=>json_decode($traffics, true), '
     {
         
         $input = $request->all();
-        // dd($input["txtRxMax_".$i]);
+        
+        // dd($input);
         // dd($request->txtTrafficID_23);
         for($i = 0;$i<=$request->txtCount;$i++)
         {
-            if(($input["txtTrafficID_".$i]) != ""){
-            $data_update = ['deviceUp' => $input["txtUp_".$i],
-                    'deviceDown' => $input["txtDown_".$i],
-                    'deviceAva' => $input["txtAvailbility_".$i],
-                    'rxSpeedMin' => $this->cal_reverse($input["txtRxMin_".$i]),
-                    'rxSpeedMax' => $this->cal_reverse($input["txtRxAvg_".$i]),
-                    'rxSpeedAvg' => $this->cal_reverse($input["txtRxMax_".$i]),
-                    'txSpeedMin' => $this->cal_reverse($input["txtTxMin_".$i]),
-                    'txSpeedMax' => $this->cal_reverse($input["txtTxAvg_".$i]),
-                    'txSpeedAvg' => $this->cal_reverse($input["txtTxMax_".$i]),
+            // dd($input);
+            if(($input['txtTrafficID'][$i]) != ""){
+                // dd($input['txtTrafficID'][$i]);
+                $data_update = ['deviceUp' => $input['txtUp'][$i],
+                    'deviceDown' => $input['txtDown'][$i],
+                    'deviceAva' => $input['txtAvailbility'][$i],
+                    'rxSpeedMin' => $input['txtRxMin'][$i],
+                    'rxSpeedMax' => $input['txtRxMax'][$i],
+                    'rxSpeedAvg' => $input['txtRxAvg'][$i],
+                    'txSpeedMin' => $input['txtTxMin'][$i],
+                    'txSpeedMax' => $input['txtTxMax'][$i],
+                    'txSpeedAvg' => $input['txtTxAvg'][$i],
             ];
-            $traffic_update = Traffic::where('id',$input["txtTrafficID_".$i])->update($data_update);
-            dd($traffic_update);
+            $traffic_update = Traffic::where('id',$input["txtTrafficID"][$i])->update($data_update);
+            // dd($data_update);
                 
             }else{
-                var_dump($request->txtTrafficID_+$i);
+                $date_traffic =  Carbon::createFromFormat('d/m/Y', $input['txtDate'][$i])->format('Y-m-d 0:0:0');
+                // $date_traffic = Carbon::createFromFormat('Y-m-d', $input['txtDate'][$i]);
+                $data_insert = ['deviceID' =>  $input['txtDeviceID'],
+                    'deviceName' =>  $input['txtDeviceName'],
+                    'deviceUp' => $input['txtUp'][$i],
+                    'deviceDown' => $input['txtDown'][$i],
+                    'deviceAva' => $input['txtAvailbility'][$i],
+                    'rxSpeedMin' => $input['txtRxMin'][$i],
+                    'rxSpeedMax' => $input['txtRxMax'][$i],
+                    'rxSpeedAvg' => $input['txtRxAvg'][$i],
+                    'txSpeedMin' => $input['txtTxMin'][$i],
+                    'txSpeedMax' => $input['txtTxMax'][$i],
+                    'txSpeedAvg' => $input['txtTxAvg'][$i],
+                    'pollTimeUtc' => $date_traffic
+            ];
+
+            if($input['txtDown'][$i] != ""){
+                $traffic_insert = new Traffic;           
+                $traffic_insert->create($data_insert);
+            }
+            //     var_dump($request->txtTrafficID_+$i);
             }
             // dd($request->txtUp_.$i);
+        // }
         }
-    }
 
+        return Redirect::back()->withErrors(['msg', 'The Message']);
+    }
     
 }
