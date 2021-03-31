@@ -11,4 +11,20 @@ class Traffic extends Model
 
     protected $table = 'traffics';
 
+    protected $fillable = [
+        'groupID',
+        'deviceID',
+        'deviceName',
+        'deviceUp',
+        'deviceDown',
+        'deviceAva',
+        'rxSpeedMin',
+        'rxSpeedMax',
+        'rxSpeedAvg',
+        'txSpeedMin',
+        'txSpeedMax',
+        'txSpeedAvg',
+        'pollTimeUtc'
+    ];
+
 }

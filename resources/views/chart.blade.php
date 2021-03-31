@@ -47,7 +47,7 @@
         </tr>
         <tr>
           <td width="50%"><p>DESCRIPTION  : {{$device->deviceDecription}}</p></td>
-          <td width="50%"><p>GENERATE BY : GOLFY</p></td>
+          <td width="50%"><p>GENERATE BY : {{Auth::user()->name}}</p></td>
         </tr>
         <tr>
           <td width="50%"><p>SPEED  : {{$device->deviceSpeed}}</p></td>
