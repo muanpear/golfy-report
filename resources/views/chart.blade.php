@@ -50,7 +50,7 @@
           {{-- <td width="50%"><p>GENERATE BY : {{ucfirst(Auth::user()->name)}}</p></td> --}}
         </tr>
         <tr>
-          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}} {{$device->deviceUnit}}</p></td>
+          <td width="50%"><p>SPEED  : {{$device->deviceSpeed}} MBps</p></td>
         </tr>
       </table></center>
     </div>
@@ -139,6 +139,9 @@
     var options = {
       colors: ['#546E7A', '#E91E63'],
       series: [{
+        name: 'Min',
+        data: {!! $rxMin_cal !!}
+        },
         name: 'Avg',
         data: {!! $rxAvg_cal !!}
         }, {
@@ -189,6 +192,9 @@
     var options1 = {
       colors: ['#546E7A', '#E91E63'],
       series: [{
+        name: 'Min',
+        data: {!! $txMin_cal !!}
+        },
         name: 'Avg',
         data: {!! $txAvg_cal !!}
         }, {

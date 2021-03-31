@@ -129,10 +129,15 @@ class ChartController extends Controller
         $rx_Min = min($rxMin);
         $rx_Max = max($rxMax);
         $rx_unit = $this->unit($rx_Max);
+        $rxMin_cal = [];
         $rxMax_cal = [];
         $rxAvg_cal = [];
         $sum_rx_Avg = array_sum($rxAvg);
         $rx_Avg_cal =  $sum_rx_Avg/($key+1);
+
+        foreach ($rxMin as $key => $val0) {
+            array_push($rxMin_cal, $this->data_graph($rx_Max, $val0));
+        }
 
         foreach ($rxMax as $key => $val1) {
             array_push($rxMax_cal, $this->data_graph($rx_Max, $val1));
@@ -145,10 +150,15 @@ class ChartController extends Controller
         $tx_Min = min($txMin);
         $tx_Max = max($txMax);
         $tx_unit = $this->unit($tx_Max);
+        $txMin_cal = [];
         $txMax_cal = [];
         $txAvg_cal = [];
         $sum_tx_Avg = array_sum($txAvg);
         $tx_Avg_cal =  $sum_tx_Avg/($key+1);
+
+        foreach ($txMin as $key => $val0) {
+            array_push($txMin_cal, $this->data_graph($tx_Max, $val0));
+        }
 
         foreach ($txMax as $key => $val3) {
             array_push($txMax_cal, $this->data_graph($tx_Max, $val3));
@@ -166,8 +176,10 @@ class ChartController extends Controller
        $traffics_data = json_encode($traffics);
 
     	return view('chart')->with('dates',json_encode($dates,JSON_NUMERIC_CHECK))
+        ->with('rxMin_cal',json_encode($rxMin_cal,JSON_NUMERIC_CHECK))
         ->with('rxAvg_cal',json_encode($rxAvg_cal,JSON_NUMERIC_CHECK))
         ->with('rxMax_cal',json_encode($rxMax_cal,JSON_NUMERIC_CHECK))
+        ->with('txMin_cal',json_encode($txMin_cal,JSON_NUMERIC_CHECK))
         ->with('txAvg_cal',json_encode($txAvg_cal,JSON_NUMERIC_CHECK))
         ->with('txMax_cal',json_encode($txMax_cal,JSON_NUMERIC_CHECK))
         ->with('availability_cal',$availability_cal)
