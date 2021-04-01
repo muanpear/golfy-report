@@ -122,17 +122,17 @@
                     <th rowspan="2" class="vertical-center">Up(Hour)</th>
                     <th rowspan="2" class="vertical-center">Down(Hour)</th>
                     <th rowspan="2" class="vertical-center">Availbility(%)</th>
-                    <th colspan="3"><center>Output traffic(Rx)</center></th>
-                    <th colspan="3"><center>Input traffic(Tx)</center></th>
+                    <th colspan="3"><center>Input traffic</center></th>
+                    <th colspan="3"><center>Output traffic</center></th>
                   </tr>
                             
                   <tr>
-                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Rx Min (bps)</center></th>
-                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Rx Avg (bps)</center></th>
-                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Rx Max (bps)</center></th>
-                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Tx Min (bps)</center></th>
-                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Tx Avg (bps)</center></th>
-                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Tx Max (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Min (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Avg (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Max (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Min (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Avg (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Max (bps)</center></th>
                   </tr>
 
                 </thead>
