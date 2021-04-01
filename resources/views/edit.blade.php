@@ -111,8 +111,8 @@ td.pn{
                 <input type="hidden" name="txtTrafficID[]" id="txtTrafficID_{{$key}}" value="{{ $vl["id"] }}">
                 <input type="hidden" name="txtDate[]" id="txtDate{{$key}}" value="{{ $vl["date"] }}">
               </center></td>
-  <td class="pn"><center><input type='number' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
-  <td class="pn"><center><input type='number' class="floatNumberField" name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
+  <td class="pn"><center><input type='text' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
+  <td class="pn"><center><input type='time'  name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
   <td class="pn"><center><input type="number" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
@@ -140,24 +140,37 @@ td.pn{
 
 <script type="text/javascript">
   $( document ).ready(function() {
+    function checkTime(i) {
+        return (i < 10) ? "0" + i : i;
+    }
+
     $(".floatNumberField").change(function() {
             $(this).val(parseFloat($(this).val()).toFixed(2));
         });
 
-    $('input[name="txtDown[]"]').on('keyup change paste keydown', function(){
+    $('input[name="txtDown[]"]').on('change', function(){
     var $down = $(this);
 
+    var d2 = new Date("2014-02-02 "+$down.val());
+    var d1 = new Date("2014-02-03 00:00:00");
+
+    var diff = d1.getTime() - d2.getTime();
+    var msec = diff;
+    var hh = Math.floor(msec / 1000 / 60 / 60);
+    msec -= hh * 1000 * 60 * 60;
+    var mm = Math.floor(msec / 1000 / 60);
+    msec -= mm * 1000 * 60;
+      
+      ///สูตรที่ถูกต้อง 
+    // var today = new Date("2014-02-02 "+hh+":"+mm);
+    // var p = Math.round(((today - d2) / (d1 - d2)) * 100) + '%';
+    // var ava = (parseFloat(hh+'.'+mm))*100/24;
+    // console.log(checkTime(hh));
+    // console.log(diff)
     var no = $down.attr('id').split('_');
-    // let runon = 
-    let on_service = (24.00 - $down.val());
-    $('#txtUp_'+no[1]).val(parseFloat(on_service).toFixed(2));
 
-    let ava = (24.00 - $down.val())*100/24;
-    
+    $('#txtUp_'+no[1]).val(checkTime(hh) + ":" + checkTime(mm));
     $('#txtAvailbility_'+no[1]).val(parseFloat(ava).toFixed(2));
-
-    // console.log($down.attr('id')); // ID; for referencing 
-    // console.log(arr[1]); // value of this input
 
   });
 });
