@@ -44,8 +44,8 @@
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <p><strong>CIRCUIT NO. :</strong> {{$device->deviceName}}</p>
-          <p><strong>SPEED  :</strong> {{$device->deviceSpeed}} Mbps</p>
+          <p><strong> CIRCUIT NO. :</strong> {{$device->deviceName}}</p>
+          <p><strong> SPEED  :</strong> {{$device->deviceSpeed}} Mbps</p>
           {{-- <p><strong>DESCRIPTION  :</strong>{{$device->deviceDecription}}</p> --}}
         </div>
         <div class="col-6">
@@ -55,7 +55,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <p><strong>DESCRIPTION  :</strong> {{$device->deviceDecription}}</p>
+          <p><strong> DESCRIPTION  :</strong> {{$device->deviceDecription}}</p>
       </div>
     </div>
 
