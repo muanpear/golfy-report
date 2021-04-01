@@ -112,7 +112,7 @@ td.pn{
                 <input type="hidden" name="txtDate[]" id="txtDate{{$key}}" value="{{ $vl["date"] }}">
               </center></td>
   <td class="pn"><center><input type='text' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
-  <td class="pn"><center><input type='text'  name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
+  <td class="pn"><center><input type='number'  name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
   <td class="pn"><center><input type="number" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
@@ -150,8 +150,9 @@ td.pn{
 
     $('input[name="txtDown[]"]').on('change', function(){
     var $down = $(this);
-
-    var d2 = new Date("2014-02-02 "+$down.val());
+    var downtime = $down.val().split('.');
+    // alert(downtime);
+    var d2 = new Date("2014-02-02 "+downtime[0]+":"+downtime[1]);
     var d1 = new Date("2014-02-03 00:00:00");
 
     var diff = d1.getTime() - d2.getTime();
@@ -169,7 +170,7 @@ td.pn{
     // console.log(diff)
     var no = $down.attr('id').split('_');
 
-    $('#txtUp_'+no[1]).val(checkTime(hh) + ":" + checkTime(mm));
+    $('#txtUp_'+no[1]).val(checkTime(hh) + "." + checkTime(mm));
     $('#txtAvailbility_'+no[1]).val(parseFloat(ava).toFixed(4));
 
   });
