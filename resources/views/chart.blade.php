@@ -10,7 +10,9 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  
+  
   <style>
 		canvas {
 			-moz-user-select: none;
@@ -24,15 +26,15 @@
     }
 
     .table-sm {
-      font-size: 10px;
+      font-size: 8.5px;
     }
 	</style>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container">
       <center><table>
         <tr>
-          <th><img src="{{ asset('images/header.jpg') }}" width="968"></th>
+          <th><img src="{{ asset('images/hd.jpg') }}" width="100%"></th>
           {{-- <th><h4 style="padding: 10px; text-align:right">Interface Summary Report</h4></th> --}}
         </tr>
       </table></center>
@@ -40,6 +42,44 @@
     <br>
 
     <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <p><strong>CIRCUIT NO. :</strong> {{$device->deviceName}}</p>
+          <p><strong>SPEED  :</strong> {{$device->deviceSpeed}} Mbps</p>
+          {{-- <p><strong>DESCRIPTION  :</strong>{{$device->deviceDecription}}</p> --}}
+        </div>
+        <div class="col-6">
+          <p><strong>REPORT DATE :</strong> {{$daterange}}</p>
+          <p><strong>GENERATE BY :</strong> NQC</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <p><strong>DESCRIPTION  :</strong> {{$device->deviceDecription}}</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <div class="row">
+          <center><table width="85%">
+            <tr>
+              <th width="45%"><div id="chart"></div></th>
+              <th width="5%"></td>
+              <th width="45%"><div id="chart1"></div></th>
+            </tr>
+            <tr>
+            <td width="45%"><center><small>Input : Min {{number_format($rxMin_chart, 2) }} {{$rx_unit}}, Avg {{number_format($rxAvg_chart, 2) }} {{$rx_unit}}, Max {{number_format($rxMax_chart, 2) }} {{$rx_unit}}</small></center></td>
+            <td width="5%"></td>
+            <td width="45%"><center><small>Output : Min {{number_format($txMin_chart, 2) }} {{$tx_unit}}, Avg {{number_format($txAvg_chart, 2) }} {{$tx_unit}}, Max {{number_format($txMax_chart, 2) }} {{$tx_unit}}</small></center></td>
+            </tr>
+          </table></center>
+        </div>
+      </div>
+    </div>
+
+
+    {{-- <div class="container">
       <center><table width="80%">
         <tr>
           <td width="50%"><p>CIRCUIT NO. : {{$device->deviceName}}</p></td>
@@ -47,15 +87,16 @@
         </tr>
         <tr>
           <td width="50%"><p>SPEED  : {{$device->deviceSpeed}} MBps</p></td>
-          {{-- <td width="50%"><p>GENERATE BY : {{ucfirst(Auth::user()->name)}}</p></td> --}}
+          <td width="50%"><p>GENERATE BY : {{ucfirst(Auth::user()->name)}}</p></td>
         </tr>
         <tr>
           <td width="50%"><p>DESCRIPTION  : {{$device->deviceDecription}}</p></td>
         </tr>
       </table></center>
-    </div>
+    </div> --}}
 
-      <center><table width="70%">
+
+      {{-- <center><table width="70%">
         <tr>
           <th width="50%"><div id="chart"></div></th>
           <th width="50%"><div id="chart1"></div></th>
@@ -64,84 +105,83 @@
           <td width="50%"><center><small>Input Utilization: Min {{number_format($rxMin_chart, 2) }} {{$rx_unit}}, Avg {{number_format($rxAvg_chart, 2) }} {{$rx_unit}}, Max {{number_format($rxMax_chart, 2) }} {{$rx_unit}}</small></center></td>
           <td width="50%"><center><small>Output Utilization: Min {{number_format($txMin_chart, 2) }} {{$tx_unit}}, Avg {{number_format($txAvg_chart, 2) }} {{$tx_unit}}, Max {{number_format($txMax_chart, 2) }} {{$tx_unit}}</small></center></td>
         </tr>
-      </table></center>
+      </table></center> --}}
      
       {{-- <a class="btn btn-primary" href="{{ URL::to('/chart/pdf') }}">Export to PDF</a> --}}
  
     
     <hr>
     <div class="container">
-     <div class="row">
-    <div class="col-md-12">
-        <table class="table table-bordered table-striped table-sm">
-          <thead style="background-color:#778899">
-            <tr>
-              <th rowspan="2" class="vertical-center">Date</th>
-              <th rowspan="2" class="vertical-center">Up(Hour)</th>
-              <th rowspan="2" class="vertical-center">Down(Hour)</th>
-              <th rowspan="2" class="vertical-center">Availbility(%)</th>
-              <th colspan="3"><center>Receive(Rx)</center></th>
-              <th colspan="3"><center>Transmit(Tx)</center></th>
-            </tr>
-<tr>
-  <th><center>Rx Min (bps)</center></th>
-  <th><center>Rx Avg (bps)</center></th>
-  <th><center>Rx Max (bps)</center></th>
-  <th><center>Tx Min (bps)</center></th>
-  <th><center>Tx Avg (bps)</center></th>
-  <th><center>Tx Max (bps)</center></th>
-</tr>
-</thead>
-<tbody>
-  @foreach ($traffics as $key => $vl)
-  <tr>
-  <td><center>{{ $vl["date"] }}</center></td>
-  <td><center>{{ $vl['up'] }}</center></td>
-  <td><center>{{ $vl['down'] }}</center></td>
-  <td><center>{{ $vl['availbility'] }}</center></td>
-  <td><center>{{ number_format($vl['rxMin'], 0) }}</center></td>
-  <td><center>{{ number_format($vl['rxAvg'], 0) }}</center></td>
-  <td><center>{{ number_format($vl['rxMax'], 0) }}</center></td>
-  <td><center>{{ number_format($vl['txMin'], 0) }}</center></td>
-  <td><center>{{ number_format($vl['txAvg'], 0) }}</center></td>
-  <td><center>{{ number_format($vl['txMax'], 0) }}</center></td>
-</tr>
+      <div class="row">
+        <div class="col-md-12">
+            <table class="table table-sm">
 
-@endforeach
-<tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <th><center>{{number_format($availability_cal, 2)}}</center></th>
-  <th><center>{{number_format($rx_min, 0)}}</center></th>
-  <th><center>{{number_format($rx_Avg_cal, 0)}}</center></th>
-  <th><center>{{number_format($rx_max, 0)}}</center></th>
-  <th><center>{{number_format($tx_min, 0)}}</center></th>
-  <th><center>{{number_format($tx_Avg_cal, 0)}}</center></td>
-  <th><center>{{number_format($tx_max, 0)}}</center></th>
-</tr>
-</tbody>
-</table>
-    </div>
-     </div>
-</div>
-    </div>
-	</div>
+                <thead style="background-color:#1B998B">
+                  <tr>
+                    <th rowspan="2" class="vertical-center">Date</th>
+                    <th rowspan="2" class="vertical-center">Up(Hour)</th>
+                    <th rowspan="2" class="vertical-center">Down(Hour)</th>
+                    <th rowspan="2" class="vertical-center">Availbility(%)</th>
+                    <th colspan="3"><center>Output traffic(Rx)</center></th>
+                    <th colspan="3"><center>Input traffic(Tx)</center></th>
+                  </tr>
+                            
+                  <tr>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Rx Min (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Rx Avg (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Rx Max (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Tx Min (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Tx Avg (bps)</center></th>
+                    <th class="border-bottom-0" style="background-color:#B6CFB6"><center>Tx Max (bps)</center></th>
+                  </tr>
 
-  <div class="container-fluid">
-    <center><table>
-      <tr>
-        <th><img src="{{ asset('images/ft.jpg') }}" width="968"></th>
-        {{-- <th><h4 style="padding: 10px; text-align:right">Interface Summary Report</h4></th> --}}
-      </tr>
-    </table></center>
+                </thead>
+                    <tbody>
+                      @foreach ($traffics as $key => $vl)
+                        <tr style="border-bottom-color: #1B998B">
+                            <td><center>{{ $vl["date"] }}</center></td>
+                            <td><center>{{ $vl['up'] }}</center></td>
+                            <td><center>{{ $vl['down'] }}</center></td>
+                            <td><center>{{ $vl['availbility'] }}</center></td>
+                            <td><center>{{ number_format($vl['rxMin'], 0) }}</center></td>
+                            <td><center>{{ number_format($vl['rxAvg'], 0) }}</center></td>
+                            <td><center>{{ number_format($vl['rxMax'], 0) }}</center></td>
+                            <td><center>{{ number_format($vl['txMin'], 0) }}</center></td>
+                            <td><center>{{ number_format($vl['txAvg'], 0) }}</center></td>
+                            <td><center>{{ number_format($vl['txMax'], 0) }}</center></td>
+                          </tr>
+                      @endforeach
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th><center>{{number_format($availability_cal, 2)}}</center></th>
+                            <th><center>{{number_format($rx_min, 0)}}</center></th>
+                            <th><center>{{number_format($rx_Avg_cal, 0)}}</center></th>
+                            <th><center>{{number_format($rx_max, 0)}}</center></th>
+                            <th><center>{{number_format($tx_min, 0)}}</center></th>
+                            <th><center>{{number_format($tx_Avg_cal, 0)}}</center></td>
+                            <th><center>{{number_format($tx_max, 0)}}</center></th>
+                          </tr>
+                    </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <img src="{{ asset('images/ft.jpg') }}" width="100%">
+      <div class="col-12">
+    </div>
+    </div>
   </div>
 
 <script type="text/javascript">
   $( document ).ready(function() {
     //// rx
     var options = {
-      colors: ['#4BD0B8', '#546E7A', '#E91E63'],
+      colors: ['#4BD0B8', '#1B998B', '#E91E63'],
       series: [{
         name: 'Min',
         data: {!! $rxMin_cal !!}
@@ -153,7 +193,7 @@
         data: {!! $rxMax_cal !!}
       }],
       chart: {
-        height: 250,
+        height: 220,
         type: 'area'
       },
       dataLabels: {
@@ -166,7 +206,7 @@
       yaxis: {
         
         title: {
-          text: 'Interface ( {!! $rx_unit !!} )',
+          text: 'Input traffic ( {!! $rx_unit !!} )',
           rotate: -90,
         },
         labels: {
@@ -195,7 +235,7 @@
 
     //// tx
     var options1 = {
-      colors: ['#4BD0B8','#546E7A', '#E91E63'],
+      colors: ['#4BD0B8','#1B998B', '#E91E63'],
       series: [{
         name: 'Min',
         data: {!! $txMin_cal !!}
@@ -207,7 +247,7 @@
         data: {!! $txMax_cal !!}
       }],
       chart: {
-        height: 250,
+        height: 220,
         type: 'area'
       },
       dataLabels: {
@@ -219,7 +259,7 @@
       },
       yaxis: {
         title: {
-          text: 'Interface ( {!! $tx_unit !!} )',
+          text: 'Output traffic ( {!! $tx_unit !!} )',
           rotate: -90,
         },
         labels: {
