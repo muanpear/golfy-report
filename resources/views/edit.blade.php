@@ -112,7 +112,7 @@ td.pn{
                 <input type="hidden" name="txtDate[]" id="txtDate{{$key}}" value="{{ $vl["date"] }}">
               </center></td>
   <td class="pn"><center><input type='text' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
-  <td class="pn"><center><input type='time'  name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
+  <td class="pn"><center><input type='text'  name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
   <td class="pn"><center><input type="number" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
@@ -164,7 +164,7 @@ td.pn{
       ///สูตรที่ถูกต้อง 
     // var today = new Date("2014-02-02 "+hh+":"+mm);
     // var p = Math.round(((today - d2) / (d1 - d2)) * 100) + '%';
-    // var ava = (parseFloat(hh+'.'+mm))*100/24;
+    var ava = (parseFloat(hh+'.'+mm))*100/24;
     // console.log(checkTime(hh));
     // console.log(diff)
     var no = $down.attr('id').split('_');
