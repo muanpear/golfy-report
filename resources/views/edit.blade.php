@@ -170,7 +170,7 @@ td.pn{
     var no = $down.attr('id').split('_');
 
     $('#txtUp_'+no[1]).val(checkTime(hh) + ":" + checkTime(mm));
-    $('#txtAvailbility_'+no[1]).val(parseFloat(ava).toFixed(2));
+    $('#txtAvailbility_'+no[1]).val(parseFloat(ava).toFixed(4));
 
   });
 });
