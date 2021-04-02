@@ -112,7 +112,7 @@ td.pn{
                 <input type="hidden" name="txtDate[]" id="txtDate{{$key}}" value="{{ $vl["date"] }}">
               </center></td>
   <td class="pn"><center><input type='text' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
-  <td class="pn"><center><input type='number'  name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
+  <td class="pn"><center><input type='text' name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
   <td class="pn"><center><input type="number" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
