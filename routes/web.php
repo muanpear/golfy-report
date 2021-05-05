@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('chart', [ChartController::class, 'index'])->name('chart.index');
     Route::get('chart/pdf', [ChartController::class, 'createPDF']);
 
+    Route::get('chart1', [ChartController::class, 'index1'])->name('chart1.index1');
+
     Route::get('edit-data', [ChartController::class, 'edit'])->name('edit-data.edit');
     Route::post('edit-update', [ChartController::class, 'update']);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

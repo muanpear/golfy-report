@@ -180,6 +180,73 @@
 <script type="text/javascript">
   $( document ).ready(function() {
     //// rx
+    let rxPercentile = {!! $rxPercentile_chart !!};
+
+    if (rxPercentile != 0){
+    var options = {
+      colors: ['#4BD0B8', '#1B998B', '#E91E63'],
+      series: [{
+        name: 'Min',
+        data: {!! $rxMin_cal !!}
+        }, {
+        name: 'Avg',
+        data: {!! $rxAvg_cal !!}
+        }, {
+        name: 'Max',
+        data: {!! $rxMax_cal !!}
+      }],
+      chart: {
+        height: 220,
+        type: 'area'
+      },
+      annotations: {
+          yaxis: [{
+            y: {!! $rxPercentile_chart !!},
+            borderColor: '#FF0000',
+            label: {
+              show: true,
+              text: '{!! $percentile_chart !!}th Percentile ~{!! $rxPercentile_chart !!} {!! $rx_unit !!}',
+              style: {
+                color: "#fff",
+                background: '#00E396'
+              }
+            }
+          }],
+        },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 2,
+      },
+      yaxis: {
+        
+        title: {
+          text: 'Input traffic ( {!! $rx_unit !!} )',
+          rotate: -90,
+        },
+        labels: {
+          formatter: function (value) {
+          return value.toFixed(1);
+          }
+        },
+      },
+      xaxis: {
+        type: 'datetime',
+        categories: {!! $dates !!},
+        labels: {
+          format: 'd/M',
+        },
+      },
+      tooltip: {
+        x: {
+          format: 'd/M',
+        },
+      },
+    };
+
+    }else if (rxPercentile == 0){
     var options = {
       colors: ['#4BD0B8', '#1B998B', '#E91E63'],
       series: [{
@@ -229,11 +296,80 @@
       },
     };
 
+    }
+
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
 
 
     //// tx
+
+    let txPercentile = {!! $txPercentile_chart !!};
+
+    if (txPercentile != 0){
+    var options1 = {
+      colors: ['#4BD0B8','#1B998B', '#E91E63'],
+      series: [{
+        name: 'Min',
+        data: {!! $txMin_cal !!}
+        }, {
+        name: 'Avg',
+        data: {!! $txAvg_cal !!}
+        }, {
+        name: 'Max',
+        data: {!! $txMax_cal !!}
+      }],
+      chart: {
+        height: 220,
+        type: 'area'
+      },
+      annotations: {
+          yaxis: [{
+            y: {!! $txPercentile_chart !!},
+            borderColor: '#FF0000',
+            label: {
+              show: true,
+              text: '{!! $percentile_chart !!}th Percentile ~{!! $txPercentile_chart !!} {!! $tx_unit !!}',
+              style: {
+                color: "#fff",
+                background: '#00E396'
+              }
+            }
+          }],
+        },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 2,
+      },
+      yaxis: {
+        title: {
+          text: 'Output traffic ( {!! $tx_unit !!} )',
+          rotate: -90,
+        },
+        labels: {
+          formatter: function (value) {
+          return value.toFixed(1);
+          }
+        },
+      },
+      xaxis: {
+        type: 'datetime',
+        categories: {!! $dates !!},
+        labels: {
+          format: 'd/M',
+        },
+      },
+      tooltip: {
+        x: {
+          format: 'd/M',
+        },
+      },
+    };
+
+    }else if (txPercentile == 0){
     var options1 = {
       colors: ['#4BD0B8','#1B998B', '#E91E63'],
       series: [{
@@ -281,6 +417,7 @@
         },
       },
     };
+    }
 
     var chart1 = new ApexCharts(document.querySelector("#chart1"), options1);
     chart1.render();
