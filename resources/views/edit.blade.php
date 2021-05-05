@@ -111,9 +111,9 @@ td.pn{
                 <input type="hidden" name="txtTrafficID[]" id="txtTrafficID_{{$key}}" value="{{ $vl["id"] }}">
                 <input type="hidden" name="txtDate[]" id="txtDate{{$key}}" value="{{ $vl["date"] }}">
               </center></td>
-  <td class="pn"><center><input type='text' class="floatNumberField" readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}"></center></td>
-  <td class="pn"><center><input type='text' name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}"></center></td>
-  <td class="pn"><center><input type="number" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}"></center></td>
+  <td class="pn"><center><input type='text' class="floatNumberField" required readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}" required></center></td>
+  <td class="pn"><center><input type='text' pattern="^\d*(\.\d{0,2})?$" name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}" required></center></td>
+  <td class="pn"><center><input type="text" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}" required></center></td>
   <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
   <td class="pn"><center><input type="number" name="txtRxMax[]" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
@@ -144,11 +144,14 @@ td.pn{
         return (i < 10) ? "0" + i : i;
     }
 
+
+
     $(".floatNumberField").change(function() {
             $(this).val(parseFloat($(this).val()).toFixed(2));
         });
 
-    $('input[name="txtDown[]"]').on('change', function(){
+    $('input[name="txtDown[]"]').on('keypress keyup keydown change paste', function(){
+      this.value = this.value.replace(/[^0-9\.]/g,'');
     var $down = $(this);
     var downtime = $down.val().split('.');
     // alert(downtime);
