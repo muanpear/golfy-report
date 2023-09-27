@@ -114,12 +114,12 @@ td.pn{
   <td class="pn"><center><input type='text' class="floatNumberField" required readonly name="txtUp[]" id="txtUp_{{$key}}" value="{{ $vl["up"] }}" required></center></td>
   <td class="pn"><center><input type='text' pattern="^\d*(\.\d{0,2})?$" name="txtDown[]" id="txtDown_{{$key}}" value="{{ $vl["down"] }}" required></center></td>
   <td class="pn"><center><input type="text" readonly name="txtAvailbility[]" id="txtAvailbility_{{$key}}" value="{{ $vl["availbility"] }}" required></center></td>
-  <td class="pn"><center><input type="number" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
-  <td class="pn"><center><input type="number" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
-  <td class="pn"><center><input type="number" name="txtRxMax[]" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
-  <td class="pn"><center><input type="number" name="txtTxMin[]" id="txtTxMin_{{$key}}" value="{{ $vl["txMin"] }}"></center></td>
-  <td class="pn"><center><input type="number" name="txtTxAvg[]" id="txtTxAvg_{{$key}}" value="{{ $vl["txAvg"] }}"></center></td>
-  <td class="pn"><center><input type="number" name="txtTxMax[]" id="txtTxMax_{{$key}}" value="{{ $vl["txMax"] }}"></center></td>
+  <td class="pn"><center><input type="number" class="floatNumberField1" name="txtRxMin[]" id="txtRxMin_{{$key}}" value="{{ $vl["rxMin"] }}"></center></td>
+  <td class="pn"><center><input type="number" class="floatNumberField" name="txtRxAvg[]" id="txtRxAvg_{{$key}}" value="{{ $vl["rxAvg"] }}"></center></td>
+  <td class="pn"><center><input type="number" class="floatNumberField" name="txtRxMax[]" id="txtRxMax_{{$key}}" value="{{ $vl["rxMax"] }}"></center></td>
+  <td class="pn"><center><input type="number" class="floatNumberField" name="txtTxMin[]" id="txtTxMin_{{$key}}" value="{{ $vl["txMin"] }}"></center></td>
+  <td class="pn"><center><input type="number" class="floatNumberField" name="txtTxAvg[]" id="txtTxAvg_{{$key}}" value="{{ $vl["txAvg"] }}"></center></td>
+  <td class="pn"><center><input type="number" class="floatNumberField" name="txtTxMax[]" id="txtTxMax_{{$key}}" value="{{ $vl["txMax"] }}"></center></td>
 </tr>
 
 @endforeach
@@ -140,15 +140,10 @@ td.pn{
 
 <script type="text/javascript">
   $( document ).ready(function() {
+   
     function checkTime(i) {
         return (i < 10) ? "0" + i : i;
     }
-
-
-
-    $(".floatNumberField").change(function() {
-            $(this).val(parseFloat($(this).val()).toFixed(2));
-        });
 
     $('input[name="txtDown[]"]').on('keypress keyup keydown change paste', function(){
       this.value = this.value.replace(/[^0-9\.]/g,'');

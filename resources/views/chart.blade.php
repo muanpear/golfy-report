@@ -50,7 +50,7 @@
         </div>
         <div class="col-6">
           <p><strong>REPORT DATE :</strong> {{$daterange}}</p>
-          <p><strong>GENERATE BY :</strong> NQC</p>
+          {{-- <p><strong>GENERATE BY :</strong> NQC</p> --}}
         </div>
       </div>
       <div class="row">
