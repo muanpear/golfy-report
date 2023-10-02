@@ -27,6 +27,7 @@
 
     .table-sm {
       font-size: 8.5px;
+      padding: 2px;
     }
 	</style>
 </head>
@@ -39,7 +40,7 @@
         </tr>
       </table></center>
     </div>
-    <br>
+    <br><br>
 
     <div class="container-fluid">
       <div class="row">
@@ -58,6 +59,7 @@
           <p><strong>DESCRIPTION  :</strong> {{$device->deviceDecription}}</p>
       </div>
     </div>
+    <br><br>
 
     <div class="container-fluid">
       <div class="card">
@@ -77,7 +79,7 @@
         </div>
       </div>
     </div>
-
+    <br><br>
 
     {{-- <div class="container">
       <center><table width="80%">
