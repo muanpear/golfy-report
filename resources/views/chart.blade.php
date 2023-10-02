@@ -31,7 +31,7 @@
 	</style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
       <center><table>
         <tr>
           <th><img src="{{ asset('images/hd.jpg') }}" width="100%"></th>
@@ -41,7 +41,7 @@
     </div>
     <br>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-6">
           <p><strong>CIRCUIT NO. :</strong> {{$device->deviceName}}</p>
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="card">
         <div class="row">
           <center><table width="85%">
@@ -111,7 +111,7 @@
  
     
     <hr>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
             <table class="table table-sm">
@@ -169,7 +169,7 @@
       </div>
     </div>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <img src="{{ asset('images/ft.jpg') }}" width="100%">
       <div class="col-12">
